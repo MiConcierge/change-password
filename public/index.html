@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+	<script src="show.js"></script>
+	<style>
+	#base{
+		position: absolute;
+		padding-top: 10%;
+		padding-left: 20%;
+		padding-right: 20%;
+		width: 100%;
+		/*height: 100%;*/
+		margin: 0;
+	}
+	.input-group{
+		text-align: right;
+		width: 100%;
+	}
+
+	.text-center{
+		/*padding-top: 10%;*/
+
+	}
+	.input-group>h4{
+		text-align: center;
+	}
+
+	#passInput{
+		z-index: 1;
+		width: 60%;
+	}
+
+	.field-icon {
+		float: right;
+	  margin-left: -25px;
+	  margin-top: 10px;
+	  position: relative;
+	  z-index: 3;
+}
+.panel{
+width: 100%;
+height: 100%;
+margin-bottom: 0;
+
+
+}
+.panel-body{
+	height: inherit;
+	background-color: #fff;
+}
+
+@media (max-width: 500px) {
+	#base{
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 0;
+		width: 100%;
+		height:100%;
+		margin: 0;
+
+	}
+	.text-center {
+		padding-top: 30%;
+	}
+}
+	</style>
+</head>
+<body>
+<!--PROVIDED BY MARCELO MARTINS - BOOTLY @ mmartins-->
+<div class="container-flex" id="base">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="text-center">
+                      <img src="http://app.miconcierge.mx/static/media/icono_mic.a7173ce9.png" class="login" height="100">
+											
+                      <div class="container-fluid" id="root"></div>
+                      <!--
+                      <h3 class="text-center">Forgot Password?</h3>
+                      <p>Write your new password for your account</p>
+                        <div class="panel-body">
+                          <div id="base"></div>
+                          <!--
+                          <form class="form" id="formulario"><!-start form--><!--add form action as needed-->
+                            <!--<fieldset>
+                              <div class=" form-group">
+                                <div class="input-group">
+                                  <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>-->
+                                  <!--EMAIL ADDRESS-->
+                                <!--  <p>Write your new password</p>
+                                  <input id="passInput" type="password" class="form-control" name="password" value="secret">
+                                  <span class="fa fa-eye field-icon" id="icon" onclick="SHPass()"></span>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <input class="btn btn-lg btn-primary btn-block" value="Change Password" type="submit">
+                              </div>
+
+                          /end form-
+
+                        </fieldset></form> </div>-->
+                    </div>
+                </div>
+            </div>
+</div>
+
+</body>
+	<script>
+	jQuery(function(){
+		$(#error).hide();
+	});
+
+	</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</html>
