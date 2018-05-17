@@ -15,15 +15,16 @@ const httpLink = createHttpLink({
   uri: GRAPHCMS_API,
 })
 
-const authLink = setContext((_, {headers})=>{
-  const token = localStorage.getItem('token');
-  return{
+const authLink = setContext((_, {headers}) => {
+  const token = localStorage.getItem('token')
+  if (!token) return { headers }
+  return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer '${token}'` : "",
+      'Authorization': token ? `Bearer ${token}` : null
     }
   }
-});
+})
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache()

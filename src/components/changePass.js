@@ -27,11 +27,14 @@ class changePass extends Component {
               <p>Write your new password</p>
               {this.state.isPasswordVisible ?
                 <input type='text'  id="passInput" onChange={(e) => this.setState({password: e.target.value})} value={this.state.password} /> :
-                <input type='password'id="passInput" onChange={(e) => this.setState({password: e.target.value})} value={this.state.password} />}
-                <input type="button" onClick={() => this.setState({isPasswordVisible: !this.state.isPasswordVisible})} value={this.state.isPasswordVisible ? 'Hide Password' : 'Show Password'}/>
+                <input type='password' id="passInput" onChange={(e) => this.setState({password: e.target.value})} value={this.state.password} />}
+                {this.state.isPasswordVisible ?
+                  <button type="button" className="btn btn-md" id="see" onClick={() => this.setState({isPasswordVisible: !this.state.isPasswordVisible})}><span className="glyphicon glyphicon-eye-close"></span></button>:
+                  <button type="button" className="btn btn-md" id="see" onClick={() => this.setState({isPasswordVisible: !this.state.isPasswordVisible})}><span className="glyphicon glyphicon-eye-open"></span></button>
+                }
           </div>
           <div className="form-group">
-            <input className="btn btn-lg btn-primary btn-block" value="Verify Email" type="submit"/>
+            <input className="btn btn-lg btn-primary btn-block" value="Change Password" type="submit"/>
           </div>
     </fieldset>
     </form>
@@ -47,13 +50,17 @@ class changePass extends Component {
       pass
     }
   });
-  if (result.data.pwd) {
+
+  if (result.data.updatePassword.token!=null) {
+    document.getElementById('passInput').value="";
     this.props.history.push('/confirm');
   }
-  else{
-    document.getElementById('passInput').value = "";
-  }
+
 }
+
+/*
+  <input type="button" className="btn btn-md" onClick={() => this.setState({isPasswordVisible: !this.state.isPasswordVisible})} value={this.state.isPasswordVisible ? 'Hide Password' : 'Show Password'}/>
+*/
 
 }
 
