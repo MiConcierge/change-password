@@ -8,7 +8,7 @@ const App = () => (
   <Router>
     <div>
       <main>
-        <Route path='/' component={Pass} />
+        <Route exact path='/' component={Pass} />
         <Route path='/confirm' component={Confirm} />
       </main>
     </div>

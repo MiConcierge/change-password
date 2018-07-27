@@ -4,20 +4,43 @@ import gql from 'graphql-tag'
 
 
 class changePass extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-  this.state = {
-    password: '',
-    isPasswordVisible: false
-
+    this.state = {
+      password: '',
+      isPasswordVisible: false
+    }
   }
-}
+
+  componentDidMount () {
+    const query = new URLSearchParams(this.props.location.search)
+    const value = query.get('token')
+
+    if (!value) {
+      return window.location.replace('http://reset.miconcierge.mx')
+    }
+
+    localStorage.setItem('token', value)
+  }
+
+  componentWillMount () {
+    localStorage.removeItem('token')
+  }
+
+  _createLink = async (e) => {
+    e.preventDefault();
+    const pass  = this.state.password;
+    const result = await this.props.updatePassword({ variables: { pass } });
+
+    localStorage.removeItem('token');
+
+    if (result.data.updatePassword.token !== null) {
+      document.getElementById('passInput').value = "";
+      this.props.history.push('/confirm');
+    }
+  }
 
   render() {
-    const query = new URLSearchParams(this.props.location.search);
-    const value = query.get('token');
-    localStorage.setItem('token',value);
-    console.log(value);
     return (
       <div>
       <h1>Change your Password</h1>
@@ -41,27 +64,6 @@ class changePass extends Component {
     </div>
     )
   }
-
-  _createLink = async (e) => {
-    e.preventDefault();
-  const pass  = this.state.password;
-  const result = await this.props.updatePassword({
-    variables: {
-      pass
-    }
-  });
-
-  if (result.data.updatePassword.token!=null) {
-    document.getElementById('passInput').value="";
-    this.props.history.push('/confirm');
-  }
-
-}
-
-/*
-  <input type="button" className="btn btn-md" onClick={() => this.setState({isPasswordVisible: !this.state.isPasswordVisible})} value={this.state.isPasswordVisible ? 'Hide Password' : 'Show Password'}/>
-*/
-
 }
 
 // 1
