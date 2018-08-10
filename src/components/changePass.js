@@ -16,10 +16,7 @@ class ChangePass extends Component {
     const query = new URLSearchParams(this.props.location.search)
     const value = query.get('token')
 
-    if (!value) {
-      // return window.location.replace('http://reset.miconcierge.mx')
-    }
-
+    if (!value) return window.location.replace('http://reset.miconcierge.mx')
     localStorage.setItem('token', value)
   }
 
