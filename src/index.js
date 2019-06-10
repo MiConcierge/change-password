@@ -10,7 +10,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloProvider } from 'react-apollo'
 
 
-const GRAPHCMS_API = 'https://api-staging.miconcierge.mx/graphql'
+const GRAPHCMS_API = 'https://api-dev.miconcierge.mx/graphql'
 
 const httpLink = createHttpLink({
   uri: GRAPHCMS_API,
@@ -22,7 +22,7 @@ const authLink = setContext((_, {headers}) => {
   return {
     headers: {
       ...headers,
-      'Authorization': token ? `Bearer ${token}` : null
+      // 'Authorization': token ? `Bearer ${token}` : null
     }
   }
 })

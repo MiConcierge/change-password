@@ -8,11 +8,13 @@ class ChangePass extends Component {
 
     this.state = {
       password: '',
-      isPasswordVisible: false
+      password2: '',
+      isPasswordVisible: false,
+      isPassword2Visible: false
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const query = new URLSearchParams(this.props.location.search)
     const value = query.get('token')
 
@@ -20,21 +22,28 @@ class ChangePass extends Component {
     localStorage.setItem('token', value)
   }
 
-  componentWillMount () {
+  componentWillMount() {
     localStorage.removeItem('token')
   }
 
   _createLink = async (e) => {
     e.preventDefault();
-    const pass  = this.state.password;
-    const result = await this.props.updatePassword({ variables: { pass } });
+    const pass = this.state.password;
+    const pass2 = this.state.password2;
+    const token = localStorage.getItem('token');
+    const result = await this.props.updatePassword({ variables: { pass, pass2, token } });
 
     localStorage.removeItem('token');
+    console.log(result);
 
-    if (result.data.updatePassword.token !== null) {
+    if (result.data.setPassword && result.data.setPassword.success) {
       document.getElementById('passInput').value = '';
+      document.getElementById('passInput2').value = '';
       this.props.history.push('/confirm');
     }
+
+    // if (result.data.updatePassword.token !== null) {
+    // }
   }
 
   render() {
@@ -44,17 +53,25 @@ class ChangePass extends Component {
         <form className='form' id='formulario' onSubmit={this._createLink.bind(this)}>
           <fieldset>
             <div className='form-group'>
-                <p>Write your new password</p>
-                {this.state.isPasswordVisible ?
-                  <input autoComplete={false} type='text'  id='passInput' onChange={(e) => this.setState({password: e.target.value})} value={this.state.password} /> :
-                  <input autoComplete={false} type='password' id='passInput' onChange={(e) => this.setState({password: e.target.value})} value={this.state.password} />}
-                  {this.state.isPasswordVisible ?
-                    <button type='button' className='btn btn-md' id='see' onClick={() => this.setState({isPasswordVisible: !this.state.isPasswordVisible})}><span className='glyphicon glyphicon-eye-close'></span></button>:
-                    <button type='button' className='btn btn-md' id='see' onClick={() => this.setState({isPasswordVisible: !this.state.isPasswordVisible})}><span className='glyphicon glyphicon-eye-open'></span></button>
-                  }
+              {/* <p>Type your new password</p> */}
+              {this.state.isPasswordVisible ?
+                <input placeholder="Type your new password" autoComplete="off" type='text' id='passInput' onChange={(e) => this.setState({ password: e.target.value })} value={this.state.password} /> :
+                <input placeholder="Type your new password" autoComplete="off" type='password' id='passInput' onChange={(e) => this.setState({ password: e.target.value })} value={this.state.password} />}
+              {this.state.isPasswordVisible ?
+                <button type='button' className='btn btn-md' id='see' onClick={() => this.setState({ isPasswordVisible: !this.state.isPasswordVisible })}><span className='glyphicon glyphicon-eye-close'></span></button> :
+                <button type='button' className='btn btn-md' id='see' onClick={() => this.setState({ isPasswordVisible: !this.state.isPasswordVisible })}><span className='glyphicon glyphicon-eye-open'></span></button>
+              }
+              {/* <p>Confirm your new password</p> */}
+              {this.state.isPassword2Visible ?
+                <input placeholder="Confirm new password" autoComplete="off" type='text' id='passInput2' onChange={(e) => this.setState({ password2: e.target.value })} value={this.state.password2} /> :
+                <input placeholder="Confirm new password" autoComplete="off" type='password' id='passInput2' onChange={(e) => this.setState({ password2: e.target.value })} value={this.state.password2} />}
+              {this.state.isPassword2Visible ?
+                <button type='button' className='btn btn-md' id='see' onClick={() => this.setState({ isPassword2Visible: !this.state.isPassword2Visible })}><span className='glyphicon glyphicon-eye-close'></span></button> :
+                <button type='button' className='btn btn-md' id='see' onClick={() => this.setState({ isPassword2Visible: !this.state.isPassword2Visible })}><span className='glyphicon glyphicon-eye-open'></span></button>
+              }
             </div>
             <div className='form-group'>
-              <input className='btn btn-lg btn-primary btn-block' value='Change Password' type='submit'/>
+              <input className='btn btn-lg btn-primary btn-block' value='Change Password' type='submit' />
             </div>
           </fieldset>
         </form>
@@ -64,9 +81,10 @@ class ChangePass extends Component {
 }
 
 const CHANGE_PASSWORD = gql`
-  mutation updatePassword($pass: String!) {
-    updatePassword(password: $pass){
-      token
+  mutation updatePassword($pass: String!, $pass2: String!, $token: String!) {
+    setPassword(password1: $pass, password2: $pass2, token: $token){
+      success,
+      message
     }
   }
 `
